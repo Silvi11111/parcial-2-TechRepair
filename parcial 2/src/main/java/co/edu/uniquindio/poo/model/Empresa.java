@@ -62,7 +62,7 @@ public class Empresa {
         this.listaRepuestos = listaRepuestos;
     }
 
-    //1.
+    //1.Registrar Cliente
     public String registrarCliente(Cliente cliente){
         Optional<Cliente> clienteEncontrado = buscarCliente(cliente.getDocumento());
         if(clienteEncontrado.isEmpty()){
@@ -74,4 +74,17 @@ public class Empresa {
         return listaClientes.stream().filter(cliente ->
                 documentoIdentidad.equals(cliente.getDocumento())).findFirst();
     }
+    //2.Registrar equipo
+    public String registrarEquipo(Cliente cliente, Equipo equipo){
+        Optional<Equipo> equipoEncontrado = cliente.buscarEquipo(equipo.getCodigoEquipo());
+
+        if (equipoEncontrado.isEmpty()) {
+            cliente.getListaEquipos().add(equipo);
+            return "El equipo fue registrado exitosamente";
+        } else {
+            return "No se puede registrar, el equipo ya existe.";
+        }
+    }
+
+
 }

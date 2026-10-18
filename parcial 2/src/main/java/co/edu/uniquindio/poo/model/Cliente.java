@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.model;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Cliente {
     private String documento;
@@ -65,5 +66,11 @@ public class Cliente {
 
     public void setListaEquipos(ArrayList<Equipo> listaEquipos) {
         this.listaEquipos = listaEquipos;
+    }
+
+
+    public Optional<Equipo> buscarEquipo(String codigoEquipo) {
+        return listaEquipos.stream().filter(equipo ->
+                codigoEquipo.equals(equipo.getCodigoEquipo())).findFirst();
     }
 }
