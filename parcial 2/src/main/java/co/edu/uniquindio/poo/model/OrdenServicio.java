@@ -1,4 +1,70 @@
 package co.edu.uniquindio.poo.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class OrdenServicio {
+    private String codigoOrden;
+    private LocalDate fechaCreacion;
+    private Cliente clienteResponsable;
+    private String observaciones;
+    private EstadoOrden estadoOrden;
+    private ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios;
+
+    public OrdenServicio(String codigoOrden, LocalDate fechaCreacion, Cliente clienteResponsable, String observaciones, EstadoOrden estadoOrden, ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios) {
+        this.codigoOrden = codigoOrden;
+        this.fechaCreacion = fechaCreacion;
+        this.clienteResponsable = clienteResponsable;
+        this.observaciones = observaciones;
+        this.estadoOrden = estadoOrden;
+        this.listaDetalleOrdenServicios = listaDetalleOrdenServicios;
+    }
+
+    public String getCodigoOrden() {
+        return codigoOrden;
+    }
+
+    public void setCodigoOrden(String codigoOrden) {
+        this.codigoOrden = codigoOrden;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Cliente getClienteResponsable() {
+        return clienteResponsable;
+    }
+
+    public void setClienteResponsable(Cliente clienteResponsable) {
+        this.clienteResponsable = clienteResponsable;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public EstadoOrden getEstadoOrden() {
+        return estadoOrden;
+    }
+
+    public void setEstadoOrden(EstadoOrden estadoOrden) {
+        this.estadoOrden = estadoOrden;
+    }
+
+    public ArrayList<DetalleOrdenServicio> getListaDetalleOrdenServicios() {
+        return listaDetalleOrdenServicios;
+    }
+
+    public void setListaDetalleOrdenServicios(ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios) {
+        this.listaDetalleOrdenServicios = listaDetalleOrdenServicios;
+    }
 }
