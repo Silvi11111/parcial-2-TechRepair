@@ -68,7 +68,7 @@ public class Cliente {
         this.listaEquipos = listaEquipos;
     }
 
-
+//buscar el equipo para registrarEquipo
     public Optional<Equipo> buscarEquipo(String codigoEquipo) {
         return listaEquipos.stream().filter(equipo ->
                 codigoEquipo.equals(equipo.getCodigoEquipo())).findFirst();

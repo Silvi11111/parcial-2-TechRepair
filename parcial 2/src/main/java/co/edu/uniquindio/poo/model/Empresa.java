@@ -85,6 +85,17 @@ public class Empresa {
             return "No se puede registrar, el equipo ya existe.";
         }
     }
-
+//3. Registrar técnico
+public String registrarTecnico(Tecnico tecnico){
+    Optional<Tecnico> tecnicoEncontrado = buscarTecnico(tecnico.getDocumentoTecnico());
+    if(tecnicoEncontrado.isEmpty()){
+        listaTecnicos.add(tecnico);
+        return "El técnico fue registrado exitosamente";
+    }else return "No se puede registrar, ya existe un técnico con esa informacion registrado anteriormente.";
+}
+    public Optional<Tecnico> buscarTecnico(String documentoIdentidad) {
+        return listaTecnicos.stream().filter(tecnico ->
+                documentoIdentidad.equals(tecnico.getDocumentoTecnico())).findFirst();
+    }
 
 }
