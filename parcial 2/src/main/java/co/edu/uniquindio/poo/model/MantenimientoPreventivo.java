@@ -1,4 +1,7 @@
 package co.edu.uniquindio.poo.model;
 
-public class MantenimientoPreventivo {
+public class MantenimientoPreventivo extends Servicio{
+    public MantenimientoPreventivo(String codigo, String nombre, String descripcion, double tarifaBase) {
+        super(codigo, nombre, descripcion, tarifaBase);
+    }
 }
