@@ -121,4 +121,17 @@ public String registrarTecnico(Tecnico tecnico){
         return listaOrdenServicios.stream().filter(ordenServicio ->
                 codigo.equals(ordenServicio.getCodigoOrden())).findFirst();
     }
+    //6. agregar detalle a una orden
+    public String agregarDetalleOrdenServicio(OrdenServicio ordenServicio, DetalleOrdenServicio detalleOrdenServicio){
+        Optional<OrdenServicio> OrdenEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
+
+        if (OrdenEncontrada.isEmpty()) {
+            return "No se puede registrar porque la orden no existe.";
+        } else {
+            ordenServicio.getListaDetalleOrdenServicios().add(detalleOrdenServicio);
+            return "Se agregó el detalle a la orden con éxito";
+        }
+    }
+
+
 }
