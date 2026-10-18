@@ -133,21 +133,35 @@ public String registrarTecnico(Tecnico tecnico){
         }
     }
     //7.asignar tecnico
-    public String asignarTecnico(Tecnico tecnico, OrdenServicio ordenServicio){
+    public String asignarTecnico(Tecnico tecnico, OrdenServicio ordenServicio) {
         Optional<Tecnico> tecnicoEncontrado = buscarTecnico(tecnico.getDocumentoTecnico());
         Optional<OrdenServicio> ordenEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
-        if(tecnicoEncontrado.isPresent() && ordenEncontrada.isPresent()) {
+        if (tecnicoEncontrado.isPresent() && ordenEncontrada.isPresent()) {
             if (tecnicoEncontrado.get().getEstadoLaboral() == EstadoLaboral.ACTIVO) {
                 ordenServicio.getListaDetalleOrdenServicios()
                         .forEach(detalle -> detalle.setTecnico(tecnicoEncontrado.get()));
 
                 return "Técnico asignado exitosamente";
-            } else return "No se puede registrar, ya existe un técnico con esa informacion registrado anteriormente.";
+            } else return "No se puede registrar,el técnico no está activo por el momento.";
 
-        }else return "No se puede registrar, asegurese de que haya escrito bien el código de la orden o el código del técnico";
+        } else
+            return "No se puede registrar, asegurese de que haya escrito bien el código de la orden o el código del técnico.";
+    }
+    //8.Registrar repuestos utilizados
+    public List<DetalleRepuesto> registrarRepuestosUtilizados(Repuesto repuesto, int cantidadUsada) {
+        List<DetalleRepuesto> repuestosUsados = new ArrayList<>();
+        if (repuesto.getCantidadDisponible() >= cantidadUsada) {
+            DetalleRepuesto nuevoDetalle = new DetalleRepuesto(cantidadUsada, repuesto, repuesto.getPrecioUnitario());
 
+            nuevoDetalle.setCantidadUsada(cantidadUsada);
+            nuevoDetalle.setRepuesto(repuesto);
+            nuevoDetalle.setPrecioUnitarioAplicado(repuesto.getPrecioUnitario());
+            repuestosUsados.add(nuevoDetalle);
+
+            int nuevoStock = repuesto.getCantidadDisponible() - cantidadUsada;
+            repuesto.setCantidadDisponible(nuevoStock);
         }
-
-
+        return repuestosUsados;
+    }
 
 }

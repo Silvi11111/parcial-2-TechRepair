@@ -1,5 +1,8 @@
 package co.edu.uniquindio.poo.model;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class Repuesto {
     private  String codigoRepuesto;
     private String nombreRepuesto;
@@ -7,14 +10,16 @@ public class Repuesto {
     private String descripcion;
     private String categoriaCompatible;
     private double precioUnitario;
+    private ArrayList<DetalleRepuesto> listaDetalleRepuestos;
 
-    public Repuesto(String codigoRepuesto, String nombreRepuesto, int cantidadDisponible, String descripcion, String categoriaCompatible, double precioUnitario) {
+    public Repuesto(String codigoRepuesto, String nombreRepuesto, int cantidadDisponible, String descripcion, String categoriaCompatible, double precioUnitario, ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
         this.codigoRepuesto = codigoRepuesto;
         this.nombreRepuesto = nombreRepuesto;
         this.cantidadDisponible = cantidadDisponible;
         this.descripcion = descripcion;
         this.categoriaCompatible = categoriaCompatible;
         this.precioUnitario = precioUnitario;
+        this.listaDetalleRepuestos = listaDetalleRepuestos;
     }
 
     public String getCodigoRepuesto() {
@@ -63,5 +68,19 @@ public class Repuesto {
 
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+
+    public ArrayList<DetalleRepuesto> getListaDetalleRepuestos() {
+        return listaDetalleRepuestos;
+    }
+
+    public void setListaDetalleRepuestos(ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
+        this.listaDetalleRepuestos = listaDetalleRepuestos;
+    }
+
+    //buscar el repuesto que se usó
+    public Optional<DetalleRepuesto> buscarDetalleRepuestoUsado(Repuesto repuesto) {
+        return listaDetalleRepuestos.stream().filter(detalleRepuesto ->
+                repuesto.equals(repuesto.getCodigoRepuesto())).findFirst();
     }
 }
