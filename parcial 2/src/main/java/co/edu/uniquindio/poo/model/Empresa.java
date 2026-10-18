@@ -97,5 +97,17 @@ public String registrarTecnico(Tecnico tecnico){
         return listaTecnicos.stream().filter(tecnico ->
                 documentoIdentidad.equals(tecnico.getDocumentoTecnico())).findFirst();
     }
+    //4. registrar repuesto
+    public String registrarRepuesto(Repuesto repuesto){
+        Optional<Repuesto> repuestoEncontrado = buscarRepuesto(repuesto.getCodigoRepuesto());
+        if(repuestoEncontrado.isEmpty()){
+            listaRepuestos.add(repuesto);
+            return "El repuesto fue registrado exitosamente";
+        }else return "No se puede registrar, ya existe un repuesto con esa informacion registrado anteriormente.";
+    }
+    public Optional<Repuesto> buscarRepuesto(String codigo) {
+        return listaRepuestos.stream().filter(repuesto ->
+                codigo.equals(repuesto.getCodigoRepuesto())).findFirst();
+    }
 
 }
