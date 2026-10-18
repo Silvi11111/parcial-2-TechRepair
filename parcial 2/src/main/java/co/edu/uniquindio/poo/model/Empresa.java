@@ -109,5 +109,16 @@ public String registrarTecnico(Tecnico tecnico){
         return listaRepuestos.stream().filter(repuesto ->
                 codigo.equals(repuesto.getCodigoRepuesto())).findFirst();
     }
-
+    //5. crear orden servicio
+    public String crearOrdenServicio(OrdenServicio ordenServicio){
+        Optional<OrdenServicio> ordenServicioEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
+        if(ordenServicioEncontrada.isEmpty()){
+            listaOrdenServicios.add(ordenServicio);
+            return "El servicio fue creado exitosamente";
+        }else return "No se puede registrar, ya existe un servicio con esa informacion registrado anteriormente.";
+    }
+    public Optional<OrdenServicio> buscarOrdenServicio(String codigo) {
+        return listaOrdenServicios.stream().filter(ordenServicio ->
+                codigo.equals(ordenServicio.getCodigoOrden())).findFirst();
+    }
 }
