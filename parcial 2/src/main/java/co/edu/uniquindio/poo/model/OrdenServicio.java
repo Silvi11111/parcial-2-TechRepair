@@ -68,9 +68,16 @@ public class OrdenServicio {
         this.listaDetalleOrdenServicios = listaDetalleOrdenServicios;
     }
 
-    public double calcularSubValorTotal() {
+    public double buscarSubTotalPorEquipo(String codigoEquipo) {
+        for (DetalleOrdenServicio detalle : this.listaDetalleOrdenServicios) {
+            if (detalle.getEquipo().getCodigoEquipo().equals(codigoEquipo)) {
+                return detalle.calcularValorDetalle();
+            }
+        }
+        return 0.0;
+    }
+    public double calcularValorTotal() {
         double totalOrden = 0.0;
-
 
         for (DetalleOrdenServicio detalle : this.listaDetalleOrdenServicios) {
             totalOrden += detalle.calcularValorDetalle();
@@ -79,3 +86,4 @@ public class OrdenServicio {
         return totalOrden;
     }
 }
+

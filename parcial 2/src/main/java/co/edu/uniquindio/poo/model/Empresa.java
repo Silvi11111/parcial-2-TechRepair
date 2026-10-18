@@ -176,15 +176,22 @@ public class Empresa {
     }
     //9.Calcular valor de un detalle
     public double calcularValorDetalle(String codigoOrden, String codigoEquipo) {
-        for (OrdenServicio ordenAux : this.listaOrdenServicios) {
-            if (ordenAux.getCodigoOrden().equals(codigoOrden)) {
-                for (DetalleOrdenServicio detalle : ordenAux.getListaDetalleOrdenServicios()) {
-                    if (detalle.getEquipo().getCodigoEquipo().equals(codigoEquipo)) {
-                        return detalle.calcularValorDetalle();
-                    }
-                }
+        for (OrdenServicio orden : this.listaOrdenServicios) {
+
+            if (orden.getCodigoOrden().equals(codigoOrden)) {
+
+                return orden.buscarSubTotalPorEquipo(codigoEquipo);
             }
         }
-        return 0.0;
+        return 0.0; // Si no existe la orden o el equipo
+    }
+    //10.Calcular valor total de la orden
+    public double calcularValorTotal(String codigoOrden) {
+        for (OrdenServicio orden : this.listaOrdenServicios) {
+            if (orden.getCodigoOrden().equals(codigoOrden)) {
+                return orden.calcularValorTotal();
+            }
+        }
+        return 0.0; // Si no encuentra la orden
     }
 }

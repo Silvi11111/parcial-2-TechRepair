@@ -78,15 +78,11 @@ public class DetalleOrdenServicio {
     }
 
     public double calcularValorDetalle() {
-
-        // Solo enviamos el equipo y las horas
         double costoTotal = this.servicio.calcularSubCosto(this.servicio.getTarifaBase(), this.horasTrabajo, this.equipo);
 
-        // Sumamos el valor de los repuestos utilizados
         for (DetalleRepuesto repuesto : this.listaDetalleRepuestos) {
             costoTotal += (repuesto.getCantidadUsada() * repuesto.getPrecioUnitarioAplicado());
         }
-
         return costoTotal;
     }
 }
