@@ -4,4 +4,9 @@ public class Diagnostico extends Servicio{
     public Diagnostico(String codigo, String nombre, String descripcion, double tarifaBase) {
         super(codigo, nombre, descripcion, tarifaBase);
     }
+
+    @Override
+    public double calcularSubCosto(double tarifaBase,int horasTrabajo, Equipo equipo) {
+        return tarifaBase=35000;
+    }
 }

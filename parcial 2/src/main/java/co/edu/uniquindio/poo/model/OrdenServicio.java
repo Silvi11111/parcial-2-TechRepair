@@ -67,4 +67,15 @@ public class OrdenServicio {
     public void setListaDetalleOrdenServicios(ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios) {
         this.listaDetalleOrdenServicios = listaDetalleOrdenServicios;
     }
+
+    public double calcularSubValorTotal() {
+        double totalOrden = 0.0;
+
+
+        for (DetalleOrdenServicio detalle : this.listaDetalleOrdenServicios) {
+            totalOrden += detalle.calcularValorDetalle();
+        }
+
+        return totalOrden;
+    }
 }

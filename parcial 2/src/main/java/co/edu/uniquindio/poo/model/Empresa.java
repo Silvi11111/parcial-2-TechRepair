@@ -6,8 +6,8 @@ public class Empresa {
     private String ubicacion;
     private ArrayList<Cliente> listaClientes;
     private ArrayList<OrdenServicio> listaOrdenServicios;
-    private  ArrayList<Tecnico> listaTecnicos;
-    private  ArrayList<Repuesto> listaRepuestos;
+    private ArrayList<Tecnico> listaTecnicos;
+    private ArrayList<Repuesto> listaRepuestos;
 
     public Empresa(String nombreEmpresa, String ubicacion, ArrayList<Cliente> listaClientes, ArrayList<OrdenServicio> listaOrdenServicios, ArrayList<Tecnico> listaTecnicos, ArrayList<Repuesto> listaRepuestos) {
         this.nombreEmpresa = nombreEmpresa;
@@ -63,19 +63,21 @@ public class Empresa {
     }
 
     //1.Registrar Cliente
-    public String registrarCliente(Cliente cliente){
+    public String registrarCliente(Cliente cliente) {
         Optional<Cliente> clienteEncontrado = buscarCliente(cliente.getDocumento());
-        if(clienteEncontrado.isEmpty()){
+        if (clienteEncontrado.isEmpty()) {
             listaClientes.add(cliente);
             return "El cliente fue registrado exitosamente";
-        }else return "No se puede registrar, ya existe un cliente con esa informacion registrado anteriormente.";
+        } else return "No se puede registrar, ya existe un cliente con esa informacion registrado anteriormente.";
     }
+
     public Optional<Cliente> buscarCliente(String documentoIdentidad) {
         return listaClientes.stream().filter(cliente ->
                 documentoIdentidad.equals(cliente.getDocumento())).findFirst();
     }
+
     //2.Registrar equipo
-    public String registrarEquipo(Cliente cliente, Equipo equipo){
+    public String registrarEquipo(Cliente cliente, Equipo equipo) {
         Optional<Equipo> equipoEncontrado = cliente.buscarEquipo(equipo.getCodigoEquipo());
 
         if (equipoEncontrado.isEmpty()) {
@@ -85,44 +87,51 @@ public class Empresa {
             return "No se puede registrar, el equipo ya existe.";
         }
     }
-//3. Registrar técnico
-public String registrarTecnico(Tecnico tecnico){
-    Optional<Tecnico> tecnicoEncontrado = buscarTecnico(tecnico.getDocumentoTecnico());
-    if(tecnicoEncontrado.isEmpty()){
-        listaTecnicos.add(tecnico);
-        return "El técnico fue registrado exitosamente";
-    }else return "No se puede registrar, ya existe un técnico con esa informacion registrado anteriormente.";
-}
+
+    //3. Registrar técnico
+    public String registrarTecnico(Tecnico tecnico) {
+        Optional<Tecnico> tecnicoEncontrado = buscarTecnico(tecnico.getDocumentoTecnico());
+        if (tecnicoEncontrado.isEmpty()) {
+            listaTecnicos.add(tecnico);
+            return "El técnico fue registrado exitosamente";
+        } else return "No se puede registrar, ya existe un técnico con esa informacion registrado anteriormente.";
+    }
+
     public Optional<Tecnico> buscarTecnico(String documentoIdentidad) {
         return listaTecnicos.stream().filter(tecnico ->
                 documentoIdentidad.equals(tecnico.getDocumentoTecnico())).findFirst();
     }
+
     //4. registrar repuesto
-    public String registrarRepuesto(Repuesto repuesto){
+    public String registrarRepuesto(Repuesto repuesto) {
         Optional<Repuesto> repuestoEncontrado = buscarRepuesto(repuesto.getCodigoRepuesto());
-        if(repuestoEncontrado.isEmpty()){
+        if (repuestoEncontrado.isEmpty()) {
             listaRepuestos.add(repuesto);
             return "El repuesto fue registrado exitosamente";
-        }else return "No se puede registrar, ya existe un repuesto con esa informacion registrado anteriormente.";
+        } else return "No se puede registrar, ya existe un repuesto con esa informacion registrado anteriormente.";
     }
+
     public Optional<Repuesto> buscarRepuesto(String codigo) {
         return listaRepuestos.stream().filter(repuesto ->
                 codigo.equals(repuesto.getCodigoRepuesto())).findFirst();
     }
+
     //5. crear orden servicio
-    public String crearOrdenServicio(OrdenServicio ordenServicio){
+    public String crearOrdenServicio(OrdenServicio ordenServicio) {
         Optional<OrdenServicio> ordenServicioEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
-        if(ordenServicioEncontrada.isEmpty()){
+        if (ordenServicioEncontrada.isEmpty()) {
             listaOrdenServicios.add(ordenServicio);
             return "El servicio fue creado exitosamente";
-        }else return "No se puede registrar, ya existe un servicio con esa informacion registrado anteriormente.";
+        } else return "No se puede registrar, ya existe un servicio con esa informacion registrado anteriormente.";
     }
+
     public Optional<OrdenServicio> buscarOrdenServicio(String codigo) {
         return listaOrdenServicios.stream().filter(ordenServicio ->
                 codigo.equals(ordenServicio.getCodigoOrden())).findFirst();
     }
+
     //6. agregar detalle a una orden
-    public String agregarDetalleOrdenServicio(OrdenServicio ordenServicio, DetalleOrdenServicio detalleOrdenServicio){
+    public String agregarDetalleOrdenServicio(OrdenServicio ordenServicio, DetalleOrdenServicio detalleOrdenServicio) {
         Optional<OrdenServicio> ordenEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
 
         if (ordenEncontrada.isEmpty()) {
@@ -132,6 +141,7 @@ public String registrarTecnico(Tecnico tecnico){
             return "Se agregó el detalle a la orden con éxito";
         }
     }
+
     //7.asignar tecnico
     public String asignarTecnico(Tecnico tecnico, OrdenServicio ordenServicio) {
         Optional<Tecnico> tecnicoEncontrado = buscarTecnico(tecnico.getDocumentoTecnico());
@@ -147,6 +157,7 @@ public String registrarTecnico(Tecnico tecnico){
         } else
             return "No se puede registrar, asegurese de que haya escrito bien el código de la orden o el código del técnico.";
     }
+
     //8.Registrar repuestos utilizados
     public List<DetalleRepuesto> registrarRepuestosUtilizados(Repuesto repuesto, int cantidadUsada) {
         List<DetalleRepuesto> repuestosUsados = new ArrayList<>();
@@ -163,5 +174,17 @@ public String registrarTecnico(Tecnico tecnico){
         }
         return repuestosUsados;
     }
-
+    //9.Calcular valor de un detalle
+    public double calcularValorDetalle(String codigoOrden, String codigoEquipo) {
+        for (OrdenServicio ordenAux : this.listaOrdenServicios) {
+            if (ordenAux.getCodigoOrden().equals(codigoOrden)) {
+                for (DetalleOrdenServicio detalle : ordenAux.getListaDetalleOrdenServicios()) {
+                    if (detalle.getEquipo().getCodigoEquipo().equals(codigoEquipo)) {
+                        return detalle.calcularValorDetalle();
+                    }
+                }
+            }
+        }
+        return 0.0;
+    }
 }
