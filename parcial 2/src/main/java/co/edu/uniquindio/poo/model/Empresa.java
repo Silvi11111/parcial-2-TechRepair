@@ -61,4 +61,17 @@ public class Empresa {
     public void setListaRepuestos(ArrayList<Repuesto> listaRepuestos) {
         this.listaRepuestos = listaRepuestos;
     }
+
+    //1.
+    public String registrarCliente(Cliente cliente){
+        Optional<Cliente> clienteEncontrado = buscarCliente(cliente.getDocumento());
+        if(clienteEncontrado.isEmpty()){
+            listaClientes.add(cliente);
+            return "El cliente fue registrado exitosamente";
+        }else return "No se puede registrar, ya existe un cliente con esa informacion registrado anteriormente.";
+    }
+    public Optional<Cliente> buscarCliente(String documentoIdentidad) {
+        return listaClientes.stream().filter(cliente ->
+                documentoIdentidad.equals(cliente.getDocumento())).findFirst();
+    }
 }
