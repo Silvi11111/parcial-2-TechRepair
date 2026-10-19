@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DetalleOrdenServicio {
     private String descripcion;
@@ -10,7 +11,7 @@ public class DetalleOrdenServicio {
     private String estado;
     private Equipo equipo;
     private Servicio servicio;
-    private ArrayList<DetalleRepuesto> listaDetalleRepuestos;
+    private List<DetalleRepuesto> listaDetalleRepuestos;
 
     public DetalleOrdenServicio(String descripcion, Tecnico tecnico, int horasTrabajo, String observacionesTecnicas, String estado, Equipo equipo, Servicio servicio, ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
         this.descripcion = descripcion;
@@ -20,7 +21,7 @@ public class DetalleOrdenServicio {
         this.estado = estado;
         this.equipo = equipo;
         this.servicio = servicio;
-        this.listaDetalleRepuestos = listaDetalleRepuestos;
+        this.listaDetalleRepuestos = new ArrayList<>();
     }
 
     public String getDescripcion() {
@@ -79,7 +80,7 @@ public class DetalleOrdenServicio {
         this.servicio = servicio;
     }
 
-    public ArrayList<DetalleRepuesto> getListaDetalleRepuestos() {
+    public List<DetalleRepuesto> getListaDetalleRepuestos() {
         return listaDetalleRepuestos;
     }
 

@@ -154,10 +154,11 @@ public class Empresa {
         if (ordenEncontrada.isEmpty()) {
             return "No se puede registrar porque la orden no existe.";
         } else {
-            ordenServicio.getListaDetalleOrdenServicios().add(detalleOrdenServicio);
+            ordenEncontrada.get().getListaDetalleOrdenServicios().add(detalleOrdenServicio);
             return "Se agregó el detalle a la orden con éxito";
         }
     }
+
 
     //7.asignar tecnico
     public String asignarTecnico(Tecnico tecnico, OrdenServicio ordenServicio) {
@@ -194,9 +195,7 @@ public class Empresa {
     //9.Calcular valor de un detalle
     public double calcularValorDetalle(String codigoOrden, String codigoEquipo) {
         for (OrdenServicio orden : this.listaOrdenServicios) {
-
             if (orden.getCodigoOrden().equals(codigoOrden)) {
-
                 return orden.buscarSubTotalPorEquipo(codigoEquipo);
             }
         }
