@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.model;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Empresa {
     private final String nombreEmpresa;
@@ -212,4 +213,11 @@ public class Empresa {
         }
         return Optional.empty();
     }
+    //13.Consultar órdenes de un cliente
+    public List<OrdenServicio> consultarOrdenesPorCliente(String nombreCliente, String documentoCliente) {
+        return listaOrdenServicios.stream()
+                .filter(orden -> orden.getClienteResponsable().getDocumento().equalsIgnoreCase(documentoCliente) && orden.getClienteResponsable().getNombreCompleto().equalsIgnoreCase(Cliente))
+                .collect(Collectors.toList());
+    }
+
 }
