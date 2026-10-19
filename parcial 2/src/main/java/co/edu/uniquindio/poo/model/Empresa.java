@@ -220,11 +220,18 @@ public class Empresa {
                 .collect(Collectors.toList());
     }
     //14.Consultar trabajos hechos por un técnico
-    public List<OrdenServicio> consultarTrabajosTecnico(String nombreTecnico, String documentoTecnico) {
+    public List<DetalleOrdenServicio> consultarTrabajosTecnico(String nombreTecnico, String documentoTecnico) {
         return listaOrdenServicios.stream()
                 .flatMap(orden -> orden.getListaDetalleOrdenServicios().stream())
                 .filter(detalle -> detalle.getTecnico().getDocumentoTecnico().equalsIgnoreCase(documentoTecnico) &&
                         detalle.getTecnico().getNombreTecnico().equalsIgnoreCase(nombreTecnico))
                 .collect(Collectors.toList());
     }
+    //15.Consultar equipos pendientes
+    public List<OrdenServicio> consultarEquiposPendientes() {
+        return listaOrdenServicios.stream()
+                .filter(orden -> orden.getEstadoOrden() == EstadoOrden.EN_PROCESO)
+                .collect(Collectors.toList());
+    }
+
 }
