@@ -219,5 +219,12 @@ public class Empresa {
                 .filter(orden -> orden.getClienteResponsable().getDocumento().equalsIgnoreCase(documentoCliente) && orden.getClienteResponsable().getNombreCompleto().equalsIgnoreCase(Cliente))
                 .collect(Collectors.toList());
     }
-
+    //14.Consultar trabajos hechos por un técnico
+    public List<OrdenServicio> consultarTrabajosTecnico(String nombreTecnico, String documentoTecnico) {
+        return listaOrdenServicios.stream()
+                .flatMap(orden -> orden.getListaDetalleOrdenServicios().stream())
+                .filter(detalle -> detalle.getTecnico().getDocumentoTecnico().equalsIgnoreCase(documentoTecnico) &&
+                        detalle.getTecnico().getNombreTecnico().equalsIgnoreCase(nombreTecnico))
+                .collect(Collectors.toList());
+    }
 }
