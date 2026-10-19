@@ -95,5 +95,9 @@ public class OrdenServicio {
         }
         return Optional.empty();
     }
+    public OrdenServicio finalizarOrden() {
+        this.estadoOrden = EstadoOrden.FINALIZADA;
+        return this;
+    }
 }
 

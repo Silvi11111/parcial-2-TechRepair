@@ -203,4 +203,13 @@ public class Empresa {
         }
         return Optional.empty();
     }
+    //12.Finalizar una orden
+    public Optional<OrdenServicio> finalizarOrdenServicio(String codigoOrden) {
+        for (OrdenServicio orden : listaOrdenServicios) {
+            if (orden.getCodigoOrden().equalsIgnoreCase(codigoOrden)) {
+                return Optional.of(orden.finalizarOrden());
+            }
+        }
+        return Optional.empty();
+    }
 }
