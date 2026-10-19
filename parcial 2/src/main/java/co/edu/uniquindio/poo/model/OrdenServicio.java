@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class OrdenServicio {
     private String codigoOrden;
@@ -84,6 +85,15 @@ public class OrdenServicio {
         }
 
         return totalOrden;
+    }
+
+    public Optional<DetalleOrdenServicio> actualizarEstadoDetallePorSerie(String numeroSerie, String nuevoEstado) {
+        for (DetalleOrdenServicio detalle : listaDetalleOrdenServicios) {
+            if (detalle.getEquipo() != null && detalle.getEquipo().getNumeroSerie().equalsIgnoreCase(numeroSerie)) {
+                return Optional.of(detalle.actualizarEstadoDetalle(nuevoEstado));
+            }
+        }
+        return Optional.empty();
     }
 }
 

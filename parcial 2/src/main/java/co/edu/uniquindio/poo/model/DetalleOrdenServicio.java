@@ -7,15 +7,17 @@ public class DetalleOrdenServicio {
     private Tecnico tecnico;
     private int horasTrabajo;
     private String observacionesTecnicas;
+    private String estado;
     private Equipo equipo;
     private Servicio servicio;
     private ArrayList<DetalleRepuesto> listaDetalleRepuestos;
 
-    public DetalleOrdenServicio(String descripcion, Tecnico tecnico, int horasTrabajo, String observacionesTecnicas, Equipo equipo, Servicio servicio, ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
+    public DetalleOrdenServicio(String descripcion, Tecnico tecnico, int horasTrabajo, String observacionesTecnicas, String estado, Equipo equipo, Servicio servicio, ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
         this.descripcion = descripcion;
         this.tecnico = tecnico;
         this.horasTrabajo = horasTrabajo;
         this.observacionesTecnicas = observacionesTecnicas;
+        this.estado = estado;
         this.equipo = equipo;
         this.servicio = servicio;
         this.listaDetalleRepuestos = listaDetalleRepuestos;
@@ -53,6 +55,14 @@ public class DetalleOrdenServicio {
         this.observacionesTecnicas = observacionesTecnicas;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public Equipo getEquipo() {
         return equipo;
     }
@@ -84,5 +94,9 @@ public class DetalleOrdenServicio {
             costoTotal += (repuesto.getCantidadUsada() * repuesto.getPrecioUnitarioAplicado());
         }
         return costoTotal;
+    }
+    public DetalleOrdenServicio actualizarEstadoDetalle(String nuevoEstado) {
+        this.estado = nuevoEstado;
+        return this;
     }
 }

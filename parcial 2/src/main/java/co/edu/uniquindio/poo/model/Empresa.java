@@ -194,4 +194,13 @@ public class Empresa {
         }
         return 0.0; // Si no encuentra la orden
     }
+    //11.Actualizar estado de un detalle
+    public Optional<DetalleOrdenServicio> actualizarEstadoDetalle(String codigoOrden, String numeroSerie, String nuevoEstado) {
+        for (OrdenServicio orden : listaOrdenServicios) {
+            if (orden.getCodigoOrden().equalsIgnoreCase(codigoOrden)) {
+                return orden.actualizarEstadoDetallePorSerie(numeroSerie, nuevoEstado);
+            }
+        }
+        return Optional.empty();
+    }
 }
