@@ -306,5 +306,14 @@ public class Empresa {
         }
         return reporte;
     }
-
+    //18.Consultar inventario crítico: inferior a 5 unidades
+    public List<Repuesto> consultarInventarioCritico() {
+        List<Repuesto> repuestosCriticos = new ArrayList<>();
+        for (Repuesto repuesto : listaRepuestos) {
+            if (repuesto.getCantidadDisponible() < 5) {
+                repuestosCriticos.add(repuesto);
+            }
+        }
+        return repuestosCriticos;
+    }
 }
