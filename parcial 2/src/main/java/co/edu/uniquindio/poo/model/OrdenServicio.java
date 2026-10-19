@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class OrdenServicio {
@@ -10,7 +11,7 @@ public class OrdenServicio {
     private Cliente clienteResponsable;
     private String observaciones;
     private EstadoOrden estadoOrden;
-    private ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios;
+    private List<DetalleOrdenServicio> listaDetalleOrdenServicios;
 
     public OrdenServicio(String codigoOrden, LocalDate fechaCreacion, Cliente clienteResponsable, String observaciones, EstadoOrden estadoOrden, ArrayList<DetalleOrdenServicio> listaDetalleOrdenServicios) {
         this.codigoOrden = codigoOrden;
@@ -18,7 +19,7 @@ public class OrdenServicio {
         this.clienteResponsable = clienteResponsable;
         this.observaciones = observaciones;
         this.estadoOrden = estadoOrden;
-        this.listaDetalleOrdenServicios = listaDetalleOrdenServicios;
+        this.listaDetalleOrdenServicios = new ArrayList<>();
     }
 
     public String getCodigoOrden() {
@@ -61,7 +62,7 @@ public class OrdenServicio {
         this.estadoOrden = estadoOrden;
     }
 
-    public ArrayList<DetalleOrdenServicio> getListaDetalleOrdenServicios() {
+    public List<DetalleOrdenServicio> getListaDetalleOrdenServicios() {
         return listaDetalleOrdenServicios;
     }
 

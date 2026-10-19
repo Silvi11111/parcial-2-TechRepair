@@ -5,7 +5,7 @@ public class ReparacionCorrectiva extends Servicio{
         super(codigo, nombre, descripcion, tarifaBase);
     }
     @Override
-    public double calcularSubCosto(double tarifaBase,int horasTrabajo, Equipo equipo) {
+    public double calcularSubCosto(int horasTrabajo, Equipo equipo) {
         return 45000 * horasTrabajo;
     }
 }

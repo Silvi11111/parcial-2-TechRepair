@@ -6,7 +6,7 @@ public class Diagnostico extends Servicio{
     }
 
     @Override
-    public double calcularSubCosto(double tarifaBase,int horasTrabajo, Equipo equipo) {
-        return tarifaBase=35000;
+    public double calcularSubCosto(int horasTrabajo, Equipo equipo) {
+        return 35000;
     }
 }

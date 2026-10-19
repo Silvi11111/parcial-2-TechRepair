@@ -5,18 +5,18 @@ import java.util.stream.Collectors;
 public class Empresa {
     private final String nombreEmpresa;
     private String ubicacion;
-    private ArrayList<Cliente> listaClientes;
-    private ArrayList<OrdenServicio> listaOrdenServicios;
-    private ArrayList<Tecnico> listaTecnicos;
-    private ArrayList<Repuesto> listaRepuestos;
+    private List<Cliente> listaClientes;
+    private List<OrdenServicio> listaOrdenServicios;
+    private List<Tecnico> listaTecnicos;
+    private List<Repuesto> listaRepuestos;
 
-    public Empresa(String nombreEmpresa, String ubicacion, ArrayList<Cliente> listaClientes, ArrayList<OrdenServicio> listaOrdenServicios, ArrayList<Tecnico> listaTecnicos, ArrayList<Repuesto> listaRepuestos) {
+    public Empresa(String nombreEmpresa, String ubicacion) {
         this.nombreEmpresa = nombreEmpresa;
         this.ubicacion = ubicacion;
-        this.listaClientes = listaClientes;
-        this.listaOrdenServicios = listaOrdenServicios;
-        this.listaTecnicos = listaTecnicos;
-        this.listaRepuestos = listaRepuestos;
+        this.listaClientes = new ArrayList<>();
+        this.listaOrdenServicios = new ArrayList<>();
+        this.listaTecnicos = new ArrayList<>();
+        this.listaRepuestos = new ArrayList<>();
     }
 
     public String getNombreEmpresa() {
@@ -31,35 +31,35 @@ public class Empresa {
         this.ubicacion = ubicacion;
     }
 
-    public ArrayList<Cliente> getListaClientes() {
+    public List<Cliente> getListaClientes() {
         return listaClientes;
     }
 
-    public void setListaClientes(ArrayList<Cliente> listaClientes) {
+    public void setListaClientes(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
 
-    public ArrayList<OrdenServicio> getListaOrdenServicios() {
+    public List<OrdenServicio> getListaOrdenServicios() {
         return listaOrdenServicios;
     }
 
-    public void setListaOrdenServicios(ArrayList<OrdenServicio> listaOrdenServicios) {
+    public void setListaOrdenServicios(List<OrdenServicio> listaOrdenServicios) {
         this.listaOrdenServicios = listaOrdenServicios;
     }
 
-    public ArrayList<Tecnico> getListaTecnicos() {
+    public List<Tecnico> getListaTecnicos() {
         return listaTecnicos;
     }
 
-    public void setListaTecnicos(ArrayList<Tecnico> listaTecnicos) {
+    public void setListaTecnicos(List<Tecnico> listaTecnicos) {
         this.listaTecnicos = listaTecnicos;
     }
 
-    public ArrayList<Repuesto> getListaRepuestos() {
+    public List<Repuesto> getListaRepuestos() {
         return listaRepuestos;
     }
 
-    public void setListaRepuestos(ArrayList<Repuesto> listaRepuestos) {
+    public void setListaRepuestos(List<Repuesto> listaRepuestos) {
         this.listaRepuestos = listaRepuestos;
     }
 
@@ -69,16 +69,30 @@ public class Empresa {
         if (clienteEncontrado.isEmpty()) {
             listaClientes.add(cliente);
             return "El cliente fue registrado exitosamente";
-        } else return "No se puede registrar, ya existe un cliente con esa informacion registrado anteriormente.";
+        }
+        else return "No se puede registrar, ya existe un cliente con esa informacion registrado anteriormente.";
     }
 
     public Optional<Cliente> buscarCliente(String documentoIdentidad) {
-        return listaClientes.stream().filter(cliente ->
-                documentoIdentidad.equals(cliente.getDocumento())).findFirst();
+        return listaClientes.stream()
+                .filter(c -> Objects.equals(c.getDocumento(), documentoIdentidad))
+                .findFirst();
     }
 
     //2.Registrar equipo
-    public String registrarEquipo(Cliente cliente, Equipo equipo) {
+    public String registrarEquipo(String documentoCliente, Equipo equipo) {
+        // 1. Buscar el cliente en la lista de la empresa
+        Optional<Cliente> clienteEncontrado = listaClientes.stream()
+                .filter(c -> c.getDocumento().equals(documentoCliente))
+                .findFirst();
+
+        if (clienteEncontrado.isEmpty()) {
+            return "El cliente especificado no existe.";
+        }
+
+        Cliente cliente = clienteEncontrado.get();
+
+        // 2. Verificar si el cliente ya tiene el equipo
         Optional<Equipo> equipoEncontrado = cliente.buscarEquipo(equipo.getCodigoEquipo());
 
         if (equipoEncontrado.isEmpty()) {
@@ -118,12 +132,14 @@ public class Empresa {
     }
 
     //5. crear orden servicio
-    public String crearOrdenServicio(OrdenServicio ordenServicio) {
+    public String crearOrdenServicio(OrdenServicio ordenServicio,String documentoCliente) {
         Optional<OrdenServicio> ordenServicioEncontrada = buscarOrdenServicio(ordenServicio.getCodigoOrden());
-        if (ordenServicioEncontrada.isEmpty()) {
+        Optional<Cliente> clienteEncontrado = buscarCliente(documentoCliente);
+        if (ordenServicioEncontrada.isEmpty() && clienteEncontrado.isPresent()) {
+            ordenServicio.setClienteResponsable(clienteEncontrado.get());
             listaOrdenServicios.add(ordenServicio);
             return "El servicio fue creado exitosamente";
-        } else return "No se puede registrar, ya existe un servicio con esa informacion registrado anteriormente.";
+        } else return "No se puede registrar porque el cliente no existe o porque ya existe una orden.";
     }
 
     public Optional<OrdenServicio> buscarOrdenServicio(String codigo) {
@@ -216,7 +232,8 @@ public class Empresa {
     //13.Consultar órdenes de un cliente
     public List<OrdenServicio> consultarOrdenesPorCliente(String nombreCliente, String documentoCliente) {
         return listaOrdenServicios.stream()
-                .filter(orden -> orden.getClienteResponsable().getDocumento().equalsIgnoreCase(documentoCliente) && orden.getClienteResponsable().getNombreCompleto().equalsIgnoreCase(Cliente))
+                .filter(orden -> orden.getClienteResponsable().getDocumento().equalsIgnoreCase(documentoCliente)
+                        && orden.getClienteResponsable().getNombreCompleto().equalsIgnoreCase(nombreCliente))
                 .collect(Collectors.toList());
     }
     //14.Consultar trabajos hechos por un técnico
@@ -265,11 +282,11 @@ public class Empresa {
             for (DetalleOrdenServicio detalle : orden.getListaDetalleOrdenServicios()) {
                 Servicio servicio = detalle.getServicio();
                 if (servicio instanceof Diagnostico) {
-                    totalDiagnostico += servicio.calcularSubCosto();
+                    totalDiagnostico += servicio.calcularSubCosto(detalle.getHorasTrabajo(), detalle.getEquipo());
                 } else if (servicio instanceof MantenimientoPreventivo) {
-                    totalMantenimiento += servicio.calcularSubCosto();
+                    totalMantenimiento += servicio.calcularSubCosto(detalle.getHorasTrabajo(), detalle.getEquipo());
                 } else if (servicio instanceof ReparacionCorrectiva) {
-                    totalReparacion += servicio.calcularSubCosto();
+                    totalReparacion += servicio.calcularSubCosto(detalle.getHorasTrabajo(), detalle.getEquipo());
                 }
             }
         }
@@ -294,7 +311,7 @@ public class Empresa {
                         if (detalle.getEstado().equalsIgnoreCase("FINALIZADA") ||
                                 detalle.getEstado().equalsIgnoreCase("FINALIZADO")) {
                             intervencionesFinalizadas++;
-                            valorServiciosAtendidos += detalle.getServicio().calcularSubCosto();
+                            valorServiciosAtendidos += detalle.getServicio().calcularSubCosto(detalle.getHorasTrabajo(), detalle.getEquipo());
                         }
                     }
                 }

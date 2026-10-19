@@ -45,5 +45,5 @@ public abstract class Servicio {
         this.tarifaBase = tarifaBase;
     }
 
-    public abstract double calcularSubCosto(double tarifaBase,int horasTrabajo, Equipo equipo);
+    public abstract double calcularSubCosto(int horasTrabajo, Equipo equipo);
 }

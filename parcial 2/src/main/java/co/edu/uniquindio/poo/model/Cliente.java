@@ -1,6 +1,7 @@
 package co.edu.uniquindio.poo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Cliente {
@@ -9,15 +10,16 @@ public class Cliente {
     private String telefono;
     private String correo;
     private String direccion;
-    private ArrayList<Equipo> listaEquipos;
+    private List<Equipo> listaEquipos;
 
-    public Cliente(String documento, String nombreCompleto, String telefono, String correo, String direccion, ArrayList<Equipo> listaEquipos) {
+    public Cliente(String documento, String nombreCompleto, String telefono, String correo, String direccion) {
         this.documento = documento;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
         this.correo = correo;
         this.direccion = direccion;
-        this.listaEquipos = listaEquipos;
+        this.listaEquipos = new ArrayList<>();
+
     }
 
     public String getDocumento() {
@@ -60,11 +62,11 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public ArrayList<Equipo> getListaEquipos() {
+    public List<Equipo> getListaEquipos() {
         return listaEquipos;
     }
 
-    public void setListaEquipos(ArrayList<Equipo> listaEquipos) {
+    public void setListaEquipos(List<Equipo> listaEquipos) {
         this.listaEquipos = listaEquipos;
     }
 

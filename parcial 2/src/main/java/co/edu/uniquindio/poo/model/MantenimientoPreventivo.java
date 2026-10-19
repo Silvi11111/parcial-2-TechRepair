@@ -5,7 +5,7 @@ public class MantenimientoPreventivo extends Servicio{
         super(codigo, nombre, descripcion, tarifaBase);
     }
     @Override
-    public double calcularSubCosto(double tarifaBase,int horasTrabajo, Equipo equipo) {
+    public double calcularSubCosto(int horasTrabajo, Equipo equipo) {
         double tarifaCelular=40000;
         double tarifaComputadorPortatil=60000;
         double tarifaComputadorEscritorio=70000;

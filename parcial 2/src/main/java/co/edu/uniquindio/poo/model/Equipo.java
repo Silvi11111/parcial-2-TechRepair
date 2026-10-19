@@ -3,7 +3,7 @@ package co.edu.uniquindio.poo.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Equipo {
+public class Equipo {
     private String codigoEquipo;
     private String numeroSerie;
     private String marca;

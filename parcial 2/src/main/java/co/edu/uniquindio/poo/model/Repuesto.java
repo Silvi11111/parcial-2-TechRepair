@@ -1,6 +1,8 @@
 package co.edu.uniquindio.poo.model;
 
 import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Optional;
 
 public class Repuesto {
@@ -10,16 +12,16 @@ public class Repuesto {
     private String descripcion;
     private String categoriaCompatible;
     private double precioUnitario;
-    private ArrayList<DetalleRepuesto> listaDetalleRepuestos;
+    private List<DetalleRepuesto> listaDetalleRepuestos;
 
-    public Repuesto(String codigoRepuesto, String nombreRepuesto, int cantidadDisponible, String descripcion, String categoriaCompatible, double precioUnitario, ArrayList<DetalleRepuesto> listaDetalleRepuestos) {
+    public Repuesto(String codigoRepuesto, String nombreRepuesto, int cantidadDisponible, String descripcion, String categoriaCompatible, double precioUnitario, List<DetalleRepuesto> listaDetalleRepuestos) {
         this.codigoRepuesto = codigoRepuesto;
         this.nombreRepuesto = nombreRepuesto;
         this.cantidadDisponible = cantidadDisponible;
         this.descripcion = descripcion;
         this.categoriaCompatible = categoriaCompatible;
         this.precioUnitario = precioUnitario;
-        this.listaDetalleRepuestos = listaDetalleRepuestos;
+        this.listaDetalleRepuestos = new ArrayList<>();
     }
 
     public String getCodigoRepuesto() {
@@ -70,7 +72,7 @@ public class Repuesto {
         this.precioUnitario = precioUnitario;
     }
 
-    public ArrayList<DetalleRepuesto> getListaDetalleRepuestos() {
+    public List<DetalleRepuesto> getListaDetalleRepuestos() {
         return listaDetalleRepuestos;
     }
 

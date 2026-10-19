@@ -88,7 +88,7 @@ public class DetalleOrdenServicio {
     }
 
     public double calcularValorDetalle() {
-        double costoTotal = this.servicio.calcularSubCosto(this.servicio.getTarifaBase(), this.horasTrabajo, this.equipo);
+        double costoTotal = this.servicio.calcularSubCosto( this.horasTrabajo, this.equipo);
 
         for (DetalleRepuesto repuesto : this.listaDetalleRepuestos) {
             costoTotal += (repuesto.getCantidadUsada() * repuesto.getPrecioUnitarioAplicado());
