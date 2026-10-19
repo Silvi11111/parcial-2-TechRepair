@@ -233,7 +233,8 @@ public class Empresa {
                 .filter(orden -> orden.getEstadoOrden() == EstadoOrden.EN_PROCESO)
                 .collect(Collectors.toList());
     }
-    //16.Generar reporte de servicios
+    //16.Generar reporte de servicios :Mostrar cantidad de servicios por tipo y total facturado por
+    //cada categoría.
     public List<String> calcularCantidadTipoServicio() {
         int cantidadDiagnostico = 0;
         int cantidadMantenimiento = 0;
@@ -273,9 +274,37 @@ public class Empresa {
             }
         }
         List<String> resultado = new ArrayList<>();
-        resultado.add("Diagnostico Total: $" + totalDiagnostico);
-        resultado.add("MantenimientoPreventivo Total: $" + totalMantenimiento);
-        resultado.add("ReparacionCorrectiva Total: $" + totalReparacion);
+        resultado.add("Diagnostico Total: " + totalDiagnostico+"$");
+        resultado.add("MantenimientoPreventivo Total: " + totalMantenimiento+"$");
+        resultado.add("ReparacionCorrectiva Total: " + totalReparacion+"$");
         return resultado;
     }
+
+    //17.Generar reporte de técnicos:Determinar cuántas intervenciones finalizó cada técnico y
+    //el valor de los servicios atendidos.
+    public List<String> generarReporteTecnicos() {
+        List<String> reporte = new ArrayList<>();
+        for (Tecnico tecnico : listaTecnicos) {
+            int intervencionesFinalizadas = 0;
+            double valorServiciosAtendidos = 0.0;
+            for (OrdenServicio orden : listaOrdenServicios) {
+                for (DetalleOrdenServicio detalle : orden.getListaDetalleOrdenServicios()) {
+                    if (detalle.getTecnico() != null &&
+                            detalle.getTecnico().getDocumentoTecnico().equalsIgnoreCase(tecnico.getDocumentoTecnico())) {
+                        if (detalle.getEstado().equalsIgnoreCase("FINALIZADA") ||
+                                detalle.getEstado().equalsIgnoreCase("FINALIZADO")) {
+                            intervencionesFinalizadas++;
+                            valorServiciosAtendidos += detalle.getServicio().calcularSubCosto();
+                        }
+                    }
+                }
+            }
+            reporte.add("Tecnico: " + tecnico.getNombreTecnico() +
+                    " | Documento: " + tecnico.getDocumentoTecnico() +
+                    " | Intervenciones Finalizadas: " + intervencionesFinalizadas +
+                    " | Total Atendido: " + valorServiciosAtendidos+"$");
+        }
+        return reporte;
+    }
+
 }
