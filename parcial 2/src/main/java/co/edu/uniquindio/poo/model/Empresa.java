@@ -233,5 +233,49 @@ public class Empresa {
                 .filter(orden -> orden.getEstadoOrden() == EstadoOrden.EN_PROCESO)
                 .collect(Collectors.toList());
     }
-
+    //16.Generar reporte de servicios
+    public List<String> calcularCantidadTipoServicio() {
+        int cantidadDiagnostico = 0;
+        int cantidadMantenimiento = 0;
+        int cantidadReparacion = 0;
+        for (OrdenServicio orden : listaOrdenServicios) {
+            for (DetalleOrdenServicio detalle : orden.getListaDetalleOrdenServicios()) {
+                Servicio servicio = detalle.getServicio();
+                if (servicio instanceof Diagnostico) {
+                    cantidadDiagnostico++;
+                } else if (servicio instanceof MantenimientoPreventivo) {
+                    cantidadMantenimiento++;
+                } else if (servicio instanceof ReparacionCorrectiva) {
+                    cantidadReparacion++;
+                }
+            }
+        }
+        List<String> resultado = new ArrayList<>();
+        resultado.add("Diagnostico: " + cantidadDiagnostico);
+        resultado.add("MantenimientoPreventivo: " + cantidadMantenimiento);
+        resultado.add("ReparacionCorrectiva: " + cantidadReparacion);
+        return resultado;
+    }
+    public List<String> calcularTotalTipoServicio() {
+        double totalDiagnostico = 0.0;
+        double totalMantenimiento = 0.0;
+        double totalReparacion = 0.0;
+        for (OrdenServicio orden : listaOrdenServicios) {
+            for (DetalleOrdenServicio detalle : orden.getListaDetalleOrdenServicios()) {
+                Servicio servicio = detalle.getServicio();
+                if (servicio instanceof Diagnostico) {
+                    totalDiagnostico += servicio.calcularSubCosto();
+                } else if (servicio instanceof MantenimientoPreventivo) {
+                    totalMantenimiento += servicio.calcularSubCosto();
+                } else if (servicio instanceof ReparacionCorrectiva) {
+                    totalReparacion += servicio.calcularSubCosto();
+                }
+            }
+        }
+        List<String> resultado = new ArrayList<>();
+        resultado.add("Diagnostico Total: $" + totalDiagnostico);
+        resultado.add("MantenimientoPreventivo Total: $" + totalMantenimiento);
+        resultado.add("ReparacionCorrectiva Total: $" + totalReparacion);
+        return resultado;
+    }
 }
