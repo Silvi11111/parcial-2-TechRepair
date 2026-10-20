@@ -70,9 +70,9 @@ public class Main {
                     JOptionPane.showMessageDialog(null, mensaje);
                     break;
                 case 3:
-                    String codigoTecnico=JOptionPane.showInputDialog(null,"Ingrese el código del técnico: ");
+                    String codigoTecnico=JOptionPane.showInputDialog(null,"Ingrese un nuevo código para el técnico: ");
                     String nombreTecnico=JOptionPane.showInputDialog(null,"Ingrese el nombre del técnico: ");
-                    String documentoTecnico=JOptionPane.showInputDialog(null,"Ingrese el nombre del técnico: ");
+                    String documentoTecnico=JOptionPane.showInputDialog(null,"Ingrese el documento del técnico: ");
                     Especialidad especialidad = (Especialidad) JOptionPane.showInputDialog(
                             null,
                             "Seleccione la especialidad:",
@@ -99,7 +99,7 @@ public class Main {
                     }
                     break;
                 case 4:
-                    String codigoRepuesto=JOptionPane.showInputDialog(null,"Ingrese el código del repuesto: ");
+                    String codigoRepuesto=JOptionPane.showInputDialog(null,"Ingrese un nuevo código al repuesto: ");
                     String nombreRepuesto=JOptionPane.showInputDialog(null,"Ingrese el nombre del repuesto: ");
                     String cantidadDisponible=JOptionPane.showInputDialog(null,"Ingrese la cantidad disponible de ese repuesto(números enteros): ");
                     int cantidadDisponibleRepuesto=Integer.parseInt(cantidadDisponible);
@@ -125,7 +125,7 @@ public class Main {
                     break;
                 case 5:
                     String documentoClienteOrden=JOptionPane.showInputDialog(null,"Ingrese el documento del cliente: ");
-                    String codigoOrden=JOptionPane.showInputDialog(null,"Ingrese el código de la orden: ");
+                    String codigoOrden=JOptionPane.showInputDialog(null,"Ingrese un nuevo código de la orden: ");
                     String fechaCreacion=JOptionPane.showInputDialog(null,"Ingrese la fecha de la orden (AAAA-MM-DD): ");
                     LocalDate fechaCreacionOrden=LocalDate.parse(fechaCreacion);
                     String observaciones = JOptionPane.showInputDialog(null, "Ingrese las observaciones:");
@@ -179,11 +179,11 @@ public class Main {
                     String nombreServicio = JOptionPane.showInputDialog(null, "Ingrese el nombre del servicio:");
                     String descServicio = JOptionPane.showInputDialog(null, "Ingrese la descripción del servicio:");
                     Servicio servicio = null;
-                    if ("Diagnostico".equals(tipoServicioSeleccionado)) {
+                    if ("Diagnostico".equalsIgnoreCase(tipoServicioSeleccionado)) {
                         servicio = new Diagnostico(codigoServicio, nombreServicio, descServicio,0.0);
-                    } else if ("Mantenimiento Preventivo".equals(tipoServicioSeleccionado)) {
+                    } else if ("Mantenimiento Preventivo".equalsIgnoreCase(tipoServicioSeleccionado)) {
                         servicio = new MantenimientoPreventivo(codigoServicio, nombreServicio, descServicio,0.0);
-                    } else if ("Reparacion Correctiva".equals(tipoServicioSeleccionado)) {
+                    } else if ("Reparacion Correctiva".equalsIgnoreCase(tipoServicioSeleccionado)) {
                         servicio = new ReparacionCorrectiva(codigoServicio, nombreServicio, descServicio,0.0);
                     }
                     DetalleOrdenServicio nuevoDetalle = new DetalleOrdenServicio(
@@ -411,9 +411,11 @@ public class Main {
         Tecnico tecnico1=new Tecnico("001","Pedrito piedritas","13483135",Especialidad.COMPUTADORES,EstadoLaboral.ACTIVO);
         Tecnico tecnico2=new Tecnico("002","Elsa pato","6842353221",Especialidad.DISPOSITIVOS_MOVILES,EstadoLaboral.INACTIVO);
         Tecnico tecnico3=new Tecnico("003","Sammy el heladero","153483152",Especialidad.SOPORTE_GENERAL,EstadoLaboral.ACTIVO);
+        Tecnico tecnico4=new Tecnico("004","Giuseppe","615",Especialidad.COMPUTADORES,EstadoLaboral.ACTIVO);
         empresa.registrarTecnico(tecnico1);
         empresa.registrarTecnico(tecnico2);
         empresa.registrarTecnico(tecnico3);
+        empresa.registrarTecnico(tecnico4);
 
         ArrayList<DetalleRepuesto> listaDetallesRepuesto1 = new ArrayList<>();
         Repuesto repuesto1 = new Repuesto("0001", "tornillos", 40, "es un tornillito","computadores",1000,listaDetallesRepuesto1);
@@ -428,4 +430,3 @@ public class Main {
 
     }
 }
-
