@@ -57,7 +57,7 @@ public class Main {
                     break;
                 case 2:
                     String documentoCliente=JOptionPane.showInputDialog(null,"Ingrese el documento del dueño del equipo: ");
-                    String codigoEquipo=JOptionPane.showInputDialog(null,"Ingrese el código del equipo: ");
+                    String codigoEquipo=JOptionPane.showInputDialog(null,"Ingrese un nuevo código para identificar el equipo: ");
                     String numeroSerie=JOptionPane.showInputDialog(null,"Ingrese el número de serie del equipo: ");
                     String marca=JOptionPane.showInputDialog(null,"Ingrese la marca del equipo: ");
                     String modelo=JOptionPane.showInputDialog(null,"Ingrese el modelo del equipo: ");
